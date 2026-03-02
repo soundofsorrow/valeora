@@ -1,0 +1,22 @@
+<svg width="720" height="340" viewBox="0 0 720 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="340" rx="28" fill="#FFF8F1"/>
+  <rect x="18" y="18" width="684" height="304" rx="22" fill="#FFFDF9" stroke="#E8D8CA" stroke-width="2"/>
+  <circle cx="110" cy="94" r="42" fill="#F6D2C2"/>
+  <circle cx="610" cy="82" r="34" fill="#D7E7E1"/>
+  <rect x="72" y="62" width="220" height="176" rx="18" fill="#FFFFFF" stroke="#E8D8CA" stroke-width="2"/>
+  <rect x="96" y="88" width="124" height="14" rx="7" fill="#204439" fill-opacity="0.14"/>
+  <rect x="96" y="116" width="154" height="12" rx="6" fill="#B6522E" fill-opacity="0.18"/>
+  <rect x="96" y="140" width="174" height="12" rx="6" fill="#181511" fill-opacity="0.08"/>
+  <rect x="96" y="176" width="86" height="28" rx="14" fill="#B6522E"/>
+  <rect x="320" y="84" width="328" height="64" rx="18" fill="#FFFFFF" stroke="#E8D8CA" stroke-width="2"/>
+  <rect x="346" y="104" width="154" height="12" rx="6" fill="#181511" fill-opacity="0.12"/>
+  <rect x="346" y="126" width="220" height="10" rx="5" fill="#204439" fill-opacity="0.12"/>
+  <rect x="320" y="170" width="158" height="104" rx="18" fill="#204439"/>
+  <rect x="494" y="170" width="154" height="104" rx="18" fill="#FFFFFF" stroke="#E8D8CA" stroke-width="2"/>
+  <rect x="520" y="194" width="96" height="10" rx="5" fill="#181511" fill-opacity="0.12"/>
+  <rect x="520" y="214" width="84" height="10" rx="5" fill="#B6522E" fill-opacity="0.2"/>
+  <rect x="520" y="240" width="70" height="20" rx="10" fill="#204439" fill-opacity="0.16"/>
+  <path d="M350 222L382 196L414 222" stroke="#FFF8F1" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M360 222V208L382 220L404 208V222" stroke="#FFF8F1" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="72" y="292" fill="#181511" font-family="Manrope, sans-serif" font-size="18" font-weight="700">Sıcak, anlaşılır ve anında üretim odaklı arayüz</text>
+</svg>

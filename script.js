@@ -40,52 +40,52 @@ const outputIds = [
 ];
 
 const outputLabels = {
-  listingTitle: "Ilan Basligi",
-  listingDescription: "Ilan Aciklamasi",
+  listingTitle: "İlan Başlığı",
+  listingDescription: "İlan Açıklaması",
   reelsScript: "Reels Senaryosu",
-  whatsappMessage: "WhatsApp Mesaji",
-  landingCopy: "Landing Metni",
-  voiceoverScript: "Seslendirme Scripti",
+  whatsappMessage: "WhatsApp Mesajı",
+  landingCopy: "Açılış Metni",
+  voiceoverScript: "Seslendirme Metni",
 };
 
 const toneMap = {
   Premium: {
-    opener: "Seckin detaylarla fark yaratan",
+    opener: "Seçkin detaylarla fark yaratan",
     adjective: "prestijli",
-    urgency: "Nitelikli alici profili icin guclu bir alternatif.",
+    urgency: "Nitelikli alıcı profili için güçlü bir alternatif.",
   },
-  "Guven Veren": {
-    opener: "Aile yasamina uygun, dengeli ve guven veren",
-    adjective: "duzgun planli",
-    urgency: "Yerinde goruldugunde karar surecini hizlandirabilecek bir secenek.",
+  "Güven Veren": {
+    opener: "Aile yaşamına uygun, dengeli ve güven veren",
+    adjective: "düzenli planlı",
+    urgency: "Yerinde görüldüğünde karar sürecini hızlandırabilecek bir seçenek.",
   },
-  "Hizli Satis": {
-    opener: "Piyasada dikkat cekecek hizli donusum odakli",
-    adjective: "firsat niteliginde",
-    urgency: "Dogru alici icin beklemeden degerlendirilebilecek bir ilan.",
+  "Hızlı Satış": {
+    opener: "Piyasada dikkat çekecek, hızlı dönüşüm odaklı",
+    adjective: "fırsat niteliğinde",
+    urgency: "Doğru alıcı için beklemeden değerlendirilebilecek bir ilan.",
   },
-  "Yatirim Odakli": {
-    opener: "Deger koruma ve geri donus potansiyeli yuksek",
-    adjective: "yatirim mantigina uygun",
-    urgency: "Getiri dusunen alicilar icin guclu bir aday.",
+  "Yatırım Odaklı": {
+    opener: "Değer koruma ve geri dönüş potansiyeli yüksek",
+    adjective: "yatırım mantığına uygun",
+    urgency: "Getiri düşünen alıcılar için güçlü bir aday.",
   },
 };
 
 const demoData = {
   agentName: "Atakan",
   brandName: "Valeora Prime",
-  city: "Istanbul",
-  district: "Besiktas",
+  city: "İstanbul",
+  district: "Beşiktaş",
   neighborhood: "Levent",
   propertyType: "Residence",
   rooms: "3+1",
   size: "145",
   price: "12500000",
-  listingMode: "Satilik",
-  targetBuyer: "Kurumsal hayati yogun, premium oturum arayan aileler",
+  listingMode: "Satılık",
+  targetBuyer: "Kurumsal hayatı yoğun, premium oturum arayan aileler",
   tone: "Premium",
-  highlights: "Kapali otopark, metroya yurume mesafesi, genis salon, ebeveyn banyosu, site ici guvenlik",
-  cta: "Detayli bilgi, plan ve yerinde gorusme icin benimle hemen iletisime gecin.",
+  highlights: "Kapalı otopark, metroya yürüme mesafesi, geniş salon, ebeveyn banyosu, site içi güvenlik",
+  cta: "Detaylı bilgi, plan ve yerinde görüşme için benimle hemen iletişime geçin.",
 };
 
 const resultElements = outputIds.reduce((acc, id) => {
@@ -95,7 +95,7 @@ const resultElements = outputIds.reduce((acc, id) => {
 
 let latestOutputs = null;
 
-const escapeValue = (value) => value.trim().replace(/\s+/g, " ");
+const normalizeText = (value) => value.trim().replace(/\s+/g, " ");
 
 const formatPrice = (value) => {
   const numericValue = Number(String(value).replace(/[^\d]/g, ""));
@@ -110,7 +110,7 @@ const formatPrice = (value) => {
 const splitHighlights = (highlights) =>
   highlights
     .split(",")
-    .map((item) => escapeValue(item))
+    .map((item) => normalizeText(item))
     .filter(Boolean);
 
 const renderOutputs = (outputs) => {
@@ -139,35 +139,35 @@ const generateOutputs = (data) => {
 
   const listingDescription =
     `${tone.opener} bu ${data.propertyType.toLowerCase()}, ${data.city} ${data.district} ` +
-    `${data.neighborhood} lokasyonunda konumlanir. ${data.rooms} planli ve ${data.size} m2 ` +
-    `kullanim alanina sahip bu portfoy; ${highlightLine} gibi karar hizlandiran avantajlar sunar.\n\n` +
-    `Hedef profil: ${data.targetBuyer || "Lokasyon ve duzgun yasam kalitesi arayan alicilar"}.\n` +
+    `${data.neighborhood} lokasyonunda konumlanır. ${data.rooms} planlı ve ${data.size} m2 ` +
+    `kullanım alanına sahip bu portföy; ${highlightLine} gibi karar hızlandıran avantajlar sunar.\n\n` +
+    `Hedef profil: ${data.targetBuyer || "Lokasyon ve düzenli yaşam kalitesi arayan alıcılar"}.\n` +
     `Fiyat: ${formattedPrice} TL.\n\n${tone.urgency} ${data.cta}`;
 
   const reelsScript =
-    `1. Acilis: "${data.district} ${data.neighborhood}'da dikkat ceken bir ${data.propertyType.toLowerCase()}."\n` +
-    `2. Plan: "${data.rooms} plani ve ${data.size} m2 kullanim alaniyla rahat bir yasam akisi sunuyor."\n` +
-    `3. Avantaj: "${firstThreeHighlights || highlightLine} ile gunluk konforu yukari tasiyor."\n` +
-    `4. Fiyat: "${formattedPrice} TL bandinda ${data.listingMode.toLowerCase()}."\n` +
-    `5. Kapanis: "${data.agentName} ile hemen iletisime gecin ve yerinde gorun."`;
+    `1. Açılış: "${data.district} ${data.neighborhood}'da dikkat çeken bir ${data.propertyType.toLowerCase()}."\n` +
+    `2. Plan: "${data.rooms} planı ve ${data.size} m2 kullanım alanıyla rahat bir yaşam akışı sunuyor."\n` +
+    `3. Avantaj: "${firstThreeHighlights || highlightLine} ile günlük konforu yukarı taşıyor."\n` +
+    `4. Fiyat: "${formattedPrice} TL bandında ${data.listingMode.toLowerCase()}."\n` +
+    `5. Kapanış: "${data.agentName} ile hemen iletişime geçin ve yerinde görün."`;
 
   const whatsappMessage =
-    `Merhaba, ${data.brandName} adina paylastigimiz ${data.district} ${data.neighborhood} ` +
-    `${data.propertyType.toLowerCase()} ilanina gosterdiginiz ilgi icin tesekkurler.\n\n` +
-    `${data.rooms} planli, ${data.size} m2 ve ${highlightLine} avantajlarina sahip.\n` +
-    `Guncel fiyat: ${formattedPrice} TL.\n\n` +
-    `${data.cta}\n${data.agentName}`;
+    `Merhaba, ${data.brandName} adına paylaştığımız ${data.district} ${data.neighborhood} ` +
+    `${data.propertyType.toLowerCase()} ilanına gösterdiğiniz ilgi için teşekkürler.\n\n` +
+    `${data.rooms} planlı, ${data.size} m2 ve ${highlightLine} avantajlarına sahip.\n` +
+    `Güncel fiyat: ${formattedPrice} TL.\n\n` +
+    `${data.cta}\nSevgiler,\n${data.agentName}`;
 
   const landingCopy =
-    `${data.district} ${data.neighborhood}'da dogru lokasyonda, ${tone.adjective} bir ${data.propertyType.toLowerCase()} arayanlar icin ` +
-    `${data.rooms} planli bu portfoy, ${highlightLine} avantajlariyla one cikiyor. ` +
-    `${data.brandName} ile bu ilani hizli degerlendirmek icin simdi talep birakin.`;
+    `${data.district} ${data.neighborhood}'da doğru lokasyonda, ${tone.adjective} bir ${data.propertyType.toLowerCase()} arayanlar için ` +
+    `${data.rooms} planlı bu portföy, ${highlightLine} avantajlarıyla öne çıkıyor. ` +
+    `${data.brandName} ile bu ilanı sıcak bir ilk temasla hızlıca değerlendirmek için şimdi talep bırakın.`;
 
   const voiceoverScript =
-    `Istanbul ${data.district} ${data.neighborhood} lokasyonunda, ${data.rooms} planli ve ${data.size} metrekare ` +
-    `kullanim alanina sahip ${data.listingMode.toLowerCase()} bir ${data.propertyType.toLowerCase()} sunuyoruz. ` +
-    `${firstThreeHighlights || highlightLine} ozellikleriyle dikkat ceken bu portfoy, ` +
-    `${formattedPrice} TL fiyatla listelenmistir. ${data.cta}`;
+    `İstanbul ${data.district} ${data.neighborhood} lokasyonunda, ${data.rooms} planlı ve ${data.size} metrekare ` +
+    `kullanım alanına sahip ${data.listingMode.toLowerCase()} bir ${data.propertyType.toLowerCase()} sunuyoruz. ` +
+    `${firstThreeHighlights || highlightLine} özellikleriyle dikkat çeken bu portföy, ` +
+    `${formattedPrice} TL fiyatla listelenmiştir. ${data.cta}`;
 
   return {
     listingTitle,
@@ -220,7 +220,7 @@ if (generatorForm) {
 
     const formData = new FormData(generatorForm);
     const normalized = Object.fromEntries(
-      Array.from(formData.entries()).map(([key, value]) => [key, escapeValue(String(value))])
+      Array.from(formData.entries()).map(([key, value]) => [key, normalizeText(String(value))])
     );
 
     const outputs = generateOutputs(normalized);
@@ -251,7 +251,7 @@ copyButtons.forEach((button) => {
 
     await navigator.clipboard.writeText(target.textContent);
     const originalText = button.textContent;
-    button.textContent = "Kopyalandi";
+    button.textContent = "Kopyalandı";
 
     window.setTimeout(() => {
       button.textContent = originalText;
@@ -267,7 +267,7 @@ if (copyAllButton) {
 
     await navigator.clipboard.writeText(buildPackText(latestOutputs));
     const originalText = copyAllButton.textContent;
-    copyAllButton.textContent = "Tum Paket Kopyalandi";
+    copyAllButton.textContent = "Tüm Paket Kopyalandı";
 
     window.setTimeout(() => {
       copyAllButton.textContent = originalText;
@@ -286,7 +286,7 @@ if (downloadButton) {
     const anchor = document.createElement("a");
 
     anchor.href = url;
-    anchor.download = "valeora-icerik-paketi.txt";
+    anchor.download = "valeora-içerik-paketi.txt";
     anchor.click();
 
     URL.revokeObjectURL(url);
