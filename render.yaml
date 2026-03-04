@@ -1,9 +1,8 @@
 services:
   - type: web
-    name: valeora
+    name: atamen
     runtime: static
-    buildCommand: mkdir -p public/assets && cp index.html styles.css script.js public/ && cp assets/valeora-logo.svg assets/favicon.svg public/assets/
-    staticPublishPath: public
+    staticPublishPath: .
     headers:
       - path: /*
         name: X-Frame-Options
@@ -14,6 +13,3 @@ services:
       - path: /*
         name: Referrer-Policy
         value: strict-origin-when-cross-origin
-      - path: /assets/*
-        name: Cache-Control
-        value: public, max-age=86400
