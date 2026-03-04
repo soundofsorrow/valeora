@@ -249,6 +249,16 @@ h3 {
   grid-column: 1 / -1;
 }
 
+.form-note {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--muted);
+  font-size: 14px;
+}
+
 .contact-box {
   padding: 22px;
 }
