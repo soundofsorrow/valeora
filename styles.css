@@ -121,6 +121,11 @@ h3 {
   color: #fff;
 }
 
+.button.whatsapp {
+  background: #14532d;
+  color: #fff;
+}
+
 .button.secondary {
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.72);
