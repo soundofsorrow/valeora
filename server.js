@@ -8,10 +8,18 @@ app.use(express.json({ limit: "1mb" }));
 app.use(express.static(path.join(__dirname)));
 
 const OWNER_EMAIL = process.env.OWNER_EMAIL || "atkn0202@gmail.com";
-const FROM_EMAIL = process.env.FROM_EMAIL || "Atamen <noreply@atamen.co>";
+const FROM_EMAIL = process.env.FROM_EMAIL || "onboarding@resend.dev";
 
 function must(value) {
   return typeof value === "string" && value.trim().length > 0;
+}
+
+function clean(value) {
+  return String(value || "").trim().replace(/^["']|["']$/g, "");
+}
+
+function validEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
 function buildPrompt(payload) {
@@ -37,9 +45,9 @@ Kisa, net ve pazarlama odakli yaz.
 }
 
 async function generateDeliveryText(payload) {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = clean(process.env.OPENAI_API_KEY);
   if (!apiKey) {
-    throw new Error("OPENAI_API_KEY tanimli degil.");
+    throw new Error("OPENAI_API_KEY tanımlı değil.");
   }
 
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -67,21 +75,31 @@ async function generateDeliveryText(payload) {
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`OpenAI hatasi: ${response.status} ${errorText}`);
+    throw new Error(`OpenAI hatası: ${response.status} ${errorText}`);
   }
 
   const data = await response.json();
   const text = data?.choices?.[0]?.message?.content;
   if (!must(text)) {
-    throw new Error("OpenAI cevabi bos geldi.");
+    throw new Error("OpenAI cevabı boş geldi.");
   }
   return text.trim();
 }
 
 async function sendEmailWithResend(payload, generatedText) {
-  const resendKey = process.env.RESEND_API_KEY;
+  const resendKey = clean(process.env.RESEND_API_KEY);
+  const fromEmail = clean(FROM_EMAIL);
+
   if (!resendKey) {
-    throw new Error("RESEND_API_KEY tanimli degil.");
+    throw new Error("RESEND_API_KEY tanımlı değil.");
+  }
+
+  if (!validEmail(fromEmail)) {
+    throw new Error("FROM_EMAIL geçersiz. Örnek: onboarding@resend.dev");
+  }
+
+  if (!validEmail(payload.eposta)) {
+    throw new Error("Müşteri e-posta adresi geçersiz.");
   }
 
   const subject = `Atamen Otomatik Teslim | ${payload.talepTuru}`;
@@ -104,7 +122,7 @@ async function sendEmailWithResend(payload, generatedText) {
       Authorization: `Bearer ${resendKey}`
     },
     body: JSON.stringify({
-      from: FROM_EMAIL,
+      from: fromEmail,
       to,
       subject,
       html
@@ -113,7 +131,7 @@ async function sendEmailWithResend(payload, generatedText) {
 
   if (!mailResponse.ok) {
     const err = await mailResponse.text();
-    throw new Error(`Resend hatasi: ${mailResponse.status} ${err}`);
+    throw new Error(`Resend hatası: ${mailResponse.status} ${err}`);
   }
 
   return mailResponse.json();
@@ -132,7 +150,7 @@ app.post("/api/auto-deliver", async (req, res) => {
     if (!must(payload.adSoyad) || !must(payload.telefon) || !must(payload.eposta) || !must(payload.talepTuru)) {
       return res.status(400).json({
         ok: false,
-        message: "Zorunlu alanlar eksik."
+      message: "Zorunlu alanlar eksik."
       });
     }
 
@@ -141,12 +159,12 @@ app.post("/api/auto-deliver", async (req, res) => {
 
     return res.json({
       ok: true,
-      message: "Basvuru alindi ve otomatik teslim paketi e-posta ile gonderildi."
+      message: "Başvuru alındı ve otomatik teslim paketi e-posta ile gönderildi."
     });
   } catch (error) {
     return res.status(500).json({
       ok: false,
-      message: error.message || "Bilinmeyen bir hata olustu."
+      message: error.message || "Bilinmeyen bir hata oluştu."
     });
   }
 });

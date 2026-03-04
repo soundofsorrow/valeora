@@ -25,7 +25,7 @@ Render > Environment bölümünde şu anahtarları girin:
 
 - `OPENAI_API_KEY`
 - `RESEND_API_KEY`
-- `FROM_EMAIL` (Resend içinde doğrulanmış gönderen adres)
+- `FROM_EMAIL` (ilk test için `onboarding@resend.dev`)
 
 Opsiyonel:
 
@@ -34,8 +34,8 @@ Opsiyonel:
 
 ## Önemli not
 
-`FROM_EMAIL` mutlaka Resend üzerinde doğrulanmış bir domain/adres olmalıdır.
-Aksi halde otomatik e-posta teslimi çalışmaz.
+İlk testte `FROM_EMAIL=onboarding@resend.dev` kullanabilirsiniz.
+Kendi domaininizle üretime geçerken doğrulanmış gönderen adres şarttır.
 
 ## Endpoint
 
