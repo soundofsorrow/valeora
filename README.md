@@ -1,57 +1,43 @@
-# Valeora
+# Atamen Tam Otomatik Sistem
 
-Valeora, Atakan tarafindan kurulan; gayrimenkul danismanlari ve butik emlak ofisleri icin
-lead sistemi, ilan anlatimi, AI seslendirme ve landing page kurulumu sunan statik tanitim sitesidir.
+Bu sürüm, statik vitrinden çıkarılıp **tam otomatik başvuru ve teslim** akışına çevrildi.
 
-## Dosyalar
+## Sistem ne yapar?
 
-- `index.html`: Ana landing page
-- `styles.css`: Tasarim sistemi ve responsive stiller
-- `script.js`: Scroll animasyonlari ve WhatsApp yonlendirme mantigi
-- `render.yaml`: Render static site blueprint
-- `assets/valeora-logo.svg`: Kurumsal logo
+1. Müşteri formu doldurur.
+2. Sistem OpenAI ile otomatik içerik paketi üretir.
+3. Üretilen paket müşteriye otomatik e-posta olarak gönderilir.
+4. Aynı teslim kopyası size de e-posta olarak düşer.
 
-## WhatsApp
+Bu akışta müşteri sizinle manuel konuşmadan süreç tamamlanır.
 
-Site su an bu numaraya baglidir:
+## Render ayarı
 
-- `+90 546 935 81 52`
+Bu repo artık `static` değil, `node` web service olarak çalışır.
 
-Kurumsal iletisim e-postasi:
+- `render.yaml` bunu otomatik tanımlar.
+- Build: `npm install`
+- Start: `npm start`
 
-- `atkn0202@gmail.com`
+## Zorunlu ortam değişkenleri
 
-Kod tarafinda:
+Render > Environment bölümünde şu anahtarları girin:
 
-- `script.js` icindeki `WHATSAPP_NUMBER`
+- `OPENAI_API_KEY`
+- `RESEND_API_KEY`
+- `FROM_EMAIL` (Resend içinde doğrulanmış gönderen adres)
 
-## Render
+Opsiyonel:
 
-Bu proje Render static site olarak hazirdir. Gercek deploy icin:
+- `OPENAI_MODEL` (varsayılan: `gpt-4o-mini`)
+- `OWNER_EMAIL` (varsayılan: `atkn0202@gmail.com`)
 
-1. Projeyi GitHub, GitLab veya Bitbucket'a push et.
-2. Render'da yeni Blueprint ya da Static Site olustur.
-3. Repo'yu bagla.
-4. `render.yaml` algilanir ve site yayinlanir.
+## Önemli not
 
-Not:
+`FROM_EMAIL` mutlaka Resend üzerinde doğrulanmış bir domain/adres olmalıdır.
+Aksi halde otomatik e-posta teslimi çalışmaz.
 
-- Bu calisma alaninda `git remote` tanimli olmadigi icin dogrudan Render yayini burada tamamlanamadi.
+## Endpoint
 
-## Domain Onerileri
-
-Uygunluk garantisi verilemez; resmi satin alma ve marka kullanimi oncesi kontrol gerekir.
-
-- `valeora.co`
-- `valeora.digital`
-- `valeorahub.com`
-- `valeoraleads.com`
-- `getvaleora.com`
-
-## Marka Notu
-
-`Valeora` ayirt edici olacak sekilde secildi. Ticari kullanimdan once:
-
-1. TurkPatent marka taramasi
-2. MERSIS / ticaret unvani uygunluk kontrolu
-3. Alan adi uygunluk kontrolu
+- `POST /api/auto-deliver`
+- `GET /health`
